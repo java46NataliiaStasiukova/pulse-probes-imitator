@@ -67,7 +67,7 @@ public class PulseProbeImitatorImpl implements PulseProbeImitator {
 		int res = 0;
 		if(getRandom(0, 100) <= JUMP_PROBABILITY) {
 			if(getRandom(0, 100) <= INCREASE_PROBABITITY) {
-				res = value + JUMP_MULTIPLIER;
+				res = value * JUMP_MULTIPLIER;
 			} else {
 				res = value / JUMP_MULTIPLIER;
 			}
