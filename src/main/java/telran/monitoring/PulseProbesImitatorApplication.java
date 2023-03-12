@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import jakarta.annotation.PreDestroy;
+import telran.monitoring.service.PulseProbeImitatorImpl;
 
 @SpringBootApplication
 public class PulseProbesImitatorApplication {
@@ -16,6 +17,12 @@ public class PulseProbesImitatorApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(PulseProbesImitatorApplication.class,  args);
 	
+		//Test
+		PulseProbeImitatorImpl test = new PulseProbeImitatorImpl();
+        for(int i = 0; i < 50; i++) {
+        	test.nextProbe();
+        }
+		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
