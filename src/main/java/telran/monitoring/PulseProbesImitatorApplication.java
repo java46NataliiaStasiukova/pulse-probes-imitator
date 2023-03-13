@@ -1,16 +1,22 @@
 package telran.monitoring;
 
 import java.util.Scanner;
+import java.util.function.Supplier;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import jakarta.annotation.PreDestroy;
+import telran.monitoring.model.PulseProbe;
 import telran.monitoring.service.PulseProbeImitator;
 
 @SpringBootApplication
 public class PulseProbesImitatorApplication {
+	@Autowired
+	PulseProbeImitator imitator;
 
 	private static final Object SHUTDOWN = "shutdown";
 	
@@ -18,10 +24,10 @@ public class PulseProbesImitatorApplication {
 		ConfigurableApplicationContext ctx = SpringApplication.run(PulseProbesImitatorApplication.class,  args);
 	
 		//Test
-		var test = ctx.getBean(PulseProbeImitator.class);
-        for(int i = 0; i < 50; i++) {
-        	test.nextProbe();
-        }
+//		var test = ctx.getBean(PulseProbeImitator.class);
+//        for(int i = 0; i < 50; i++) {
+//        	test.nextProbe();
+//        }
 		
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
@@ -33,6 +39,11 @@ public class PulseProbesImitatorApplication {
 			}
 		}
 		ctx.close();
+	}
+	
+	@Bean
+	Supplier<PulseProbe> pulseProbeSupplier(){
+		return imitator::nextProbe;
 	}
 	
 	
